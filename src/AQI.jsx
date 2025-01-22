@@ -8,7 +8,6 @@ const AQI = () => {
 
     const [city,setCity] = useState("");
     const [msg,setMsg] = useState("");
-    const [info,setInfo] = useState("")
 
     const hCity = (e) =>{
         setCity(e.target.value);
@@ -17,7 +16,7 @@ const AQI = () => {
     const find  = (e) =>{
         e.preventDefault();
         if(city.trim() === "" || !city.match(/^[a-zA-Z ]+$/)){
-            toast.error("Please Enter City)",{autoClose:1000});
+            toast.error("Please Enter City",{autoClose:1000});
             setMsg("");
             rCity.current.focus();
             return;
@@ -25,27 +24,27 @@ const AQI = () => {
         const url = `https://api.waqi.info/feed/${city}/?token=46b1977c027bdad44470e8e76a726b129ea936a7`
         axios.get(url)
         .then((res) =>{
-            console.log(res.data.data.aqi)
-            setInfo(res.data.data.aqi)
-            const air_quality = res.data.data.aqi;
+            // console.log(res.data)
+            const data = res.data.data.aqi;
+            // console.log(data);
             
-            if(air_quality <=50){
-                setMsg(`AQI = ${air_quality} ==> Good`)
+            if(data <=50){
+                setMsg(`AQI = ${data} ==> Good`)
             }
-            else if(air_quality >50 && air_quality <=100){
-                setMsg(`AQI = ${air_quality} ==> Moderate`)
+            else if(data >50 && data <=100){
+                setMsg(`AQI = ${data} ==> Moderate`)
             }
-            else if(air_quality >100 && air_quality <=150){
-                setMsg(`AQI = ${air_quality} ==> Unhealthy for Sensitive Groups`)
+            else if(data >100 && data <=150){
+                setMsg(`AQI = ${data} ==> Unhealthy for Sensitive Groups`)
             }
-            else if(air_quality >150 && air_quality <=200){
-                setMsg(`AQI = ${air_quality} ==> Unhealthy`)
+            else if(data >150 && data <=200){
+                setMsg(`AQI = ${data} ==> Unhealthy`)
             }
-            else if(air_quality >200 && air_quality <=300){
-                setMsg(`AQI = ${air_quality} ==> Very Unhealthy`)
+            else if(data >200 && data <=300){
+                setMsg(`AQI = ${data} ==> Very Unhealthy`)
             }
-            else if(air_quality >300){
-                setMsg(`AQI = ${air_quality} ==> Hazardous`)
+            else if(data >300){
+                setMsg(`AQI = ${data} ==> Hazardous`)
             }
             else{
                 toast.warn(`${city} Not Found`);
